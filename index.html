@@ -1,612 +1,87 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ElectroLab - الأنظمة الآلية</title>
+# Smart Washing Machine
+# Automated System
 
-<style>
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-    }
+class SmartWashingMachine:
 
-    body {
-        background: #0b1220;
-        color: white;
-    }
+    def __init__(self):
+        self.weight = 0
+        self.dirt_level = 0
+        self.fabric = ""
+        self.water = 0
+        self.temperature = 20
+        self.speed = 0
+        self.energy = 0
 
-    header {
-        background: #111c30;
-        padding: 20px 8%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid #263650;
-    }
-
-    header h1 {
-        color: #38bdf8;
-    }
-
-    nav button {
-        background: none;
-        border: none;
-        color: white;
-        margin: 0 8px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-
-    nav button:hover {
-        color: #38bdf8;
-    }
-
-    main {
-        width: 84%;
-        max-width: 1100px;
-        margin: 40px auto;
-    }
-
-    .page {
-        display: none;
-    }
-
-    .page.active {
-        display: block;
-    }
-
-    .hero {
-        text-align: center;
-        padding: 50px 20px;
-    }
-
-    .hero h2 {
-        font-size: 42px;
-        color: #38bdf8;
-        margin-bottom: 15px;
-    }
-
-    .hero p {
-        color: #b8c4d8;
-        font-size: 18px;
-        line-height: 1.8;
-    }
-
-    .card {
-        background: #111c30;
-        border: 1px solid #263650;
-        border-radius: 15px;
-        padding: 25px;
-        margin-top: 25px;
-    }
-
-    .card h2,
-    .card h3 {
-        color: #38bdf8;
-        margin-bottom: 15px;
-    }
-
-    .card p {
-        color: #d1d9e6;
-        line-height: 1.9;
-    }
-
-    .washing-machine {
-        max-width: 600px;
-        margin: 30px auto;
-        background: #111c30;
-        padding: 30px;
-        border-radius: 20px;
-        border: 1px solid #263650;
-    }
-
-    .step {
-        display: none;
-    }
-
-    .step.active {
-        display: block;
-    }
-
-    label {
-        display: block;
-        margin-bottom: 10px;
-        color: #dbeafe;
-        font-size: 18px;
-    }
-
-    select,
-    input {
-        width: 100%;
-        padding: 13px;
-        border-radius: 8px;
-        border: 1px solid #334155;
-        background: #0b1220;
-        color: white;
-        font-size: 16px;
-        margin-bottom: 20px;
-    }
-
-    .next-btn,
-    .reset-btn {
-        padding: 12px 25px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 16px;
-        margin: 5px;
-    }
-
-    .next-btn {
-        background: #38bdf8;
-        color: #06111f;
-    }
-
-    .reset-btn {
-        background: #334155;
-        color: white;
-    }
-
-    .result {
-        display: none;
-        margin-top: 25px;
-        padding: 20px;
-        background: #0f2435;
-        border: 1px solid #38bdf8;
-        border-radius: 12px;
-    }
-
-    .result.show {
-        display: block;
-    }
-
-    .result h3 {
-        color: #38bdf8;
-        margin-bottom: 10px;
-    }
-
-    pre {
-        direction: ltr;
-        text-align: left;
-        background: #050b14;
-        color: #dbeafe;
-        padding: 20px;
-        border-radius: 12px;
-        overflow-x: auto;
-        line-height: 1.6;
-        margin-top: 20px;
-    }
-
-    footer {
-        text-align: center;
-        padding: 30px;
-        margin-top: 50px;
-        color: #718096;
-        border-top: 1px solid #263650;
-    }
-</style>
-</head>
-
-<body>
-
-<header>
-    <h1>ElectroLab</h1>
-
-    <nav>
-        <button onclick="showPage('home')">الرئيسية</button>
-        <button onclick="showPage('lesson')">الدرس</button>
-        <button onclick="showPage('experiment')">تجربة الغسالة</button>
-    </nav>
-</header>
-
-<main>
-
-<!-- الصفحة الرئيسية -->
-<section id="home" class="page active">
-
-    <div class="hero">
-        <h2>الأنظمة الآلية</h2>
-        <p>
-            تعلّم كيف تعمل الأنظمة الآلية من خلال مثال تطبيقي
-            لنظام غسالة ذكية.
-        </p>
-    </div>
-
-    <div class="card">
-        <h2>مرحبًا بك في ElectroLab</h2>
-        <p>
-            منصة تعليمية مبسطة لمشاريع ودروس الهندسة الكهربائية
-            والأنظمة الآلية.
-        </p>
-    </div>
-
-</section>
-
-
-<!-- صفحة الدرس -->
-<section id="lesson" class="page">
-
-    <div class="card">
-        <h2>درس: نظام الغسالة الآلي</h2>
-
-        <p>
-            الغسالة الآلية هي نظام يستقبل مجموعة من المدخلات،
-            ثم يعالج هذه المعلومات ويحدد البرنامج المناسب
-            لتنفيذ عملية الغسيل.
-        </p>
-
-        <h3>مراحل عمل النظام</h3>
-
-        <p>
-            يعتمد النظام على ثلاث مدخلات رئيسية:
-        </p>
-
-        <p>
-            1. نوع المادة<br>
-            2. درجة الاتساخ<br>
-            3. وزن الملابس
-        </p>
-
-        <p>
-            بعد الحصول على هذه المعلومات يقوم النظام بتحليلها
-            وتحديد برنامج الغسيل المناسب، مثل درجة حرارة الماء،
-            مدة الغسيل وسرعة الدوران.
-        </p>
-
-        <h3>كود Python للنظام</h3>
-
-        <!-- الكود موجود هنا فقط في صفحة الدرس -->
-        <pre><code>
-def washing_machine(material, dirt_level, weight):
-
-    if material == "cotton":
-
-        if dirt_level == "light":
-            if weight <= 5:
-                temperature = 30
-                duration = 45
-                rpm = 800
-            else:
-                temperature = 40
-                duration = 55
-                rpm = 900
-
-        elif dirt_level == "medium":
-            temperature = 40
-            duration = 65
-            rpm = 1000
-
+    def detect_load(self):
+        print("\n🔍 Detecting laundry...")
+        
+        if self.weight <= 3:
+            self.water = 25
+        elif self.weight <= 6:
+            self.water = 40
         else:
-            temperature = 60
-            duration = 80
-            rpm = 1000
-
-    elif material == "synthetic":
-
-        if dirt_level == "light":
-            temperature = 30
-            duration = 40
-            rpm = 700
-
-        elif dirt_level == "medium":
-            temperature = 40
-            duration = 55
-            rpm = 800
-
-        else:
-            temperature = 40
-            duration = 70
-            rpm = 900
-
-    elif material == "wool":
-
-        temperature = 30
-        duration = 35
-        rpm = 500
-
-    else:
-
-        temperature = 30
-        duration = 45
-        rpm = 600
-
-    return temperature, duration, rpm
-        </code></pre>
-
-        <h3>ملاحظة</h3>
-
-        <p>
-            هذا الكود يمثل الجانب البرمجي من النظام الآلي.
-            أما تجربة الغسالة الموجودة في الصفحة الأخرى فهي
-            محاكاة تفاعلية للنظام ولا تعرض الكود للمستخدم.
-        </p>
-
-    </div>
-
-</section>
-
-
-<!-- تجربة الغسالة -->
-<section id="experiment" class="page">
-
-    <div class="card">
-        <h2>تجربة الغسالة الآلية</h2>
-
-        <p>
-            اختر الإعدادات بالترتيب، وسيقوم النظام بتحديد
-            برنامج الغسيل المناسب.
-        </p>
-
-        <div class="washing-machine">
-
-            <!-- المرحلة 1: المادة -->
-            <div id="step1" class="step active">
-
-                <h3>المرحلة 1 — نوع المادة</h3>
-
-                <label for="material">
-                    اختر نوع الملابس:
-                </label>
-
-                <select id="material">
-                    <option value="">-- اختر المادة --</option>
-                    <option value="cotton">قطن</option>
-                    <option value="synthetic">أقمشة صناعية</option>
-                    <option value="wool">صوف</option>
-                </select>
-
-                <button class="next-btn" onclick="goToStep2()">
-                    التالي
-                </button>
-
-            </div>
-
-
-            <!-- المرحلة 2: درجة الاتساخ -->
-            <div id="step2" class="step">
-
-                <h3>المرحلة 2 — درجة الاتساخ</h3>
-
-                <label for="dirt">
-                    اختر درجة الاتساخ:
-                </label>
-
-                <select id="dirt">
-                    <option value="">-- اختر درجة الاتساخ --</option>
-                    <option value="light">خفيفة</option>
-                    <option value="medium">متوسطة</option>
-                    <option value="heavy">شديدة</option>
-                </select>
-
-                <button class="next-btn" onclick="goToStep3()">
-                    التالي
-                </button>
-
-            </div>
-
-
-            <!-- المرحلة 3: الوزن -->
-            <div id="step3" class="step">
-
-                <h3>المرحلة 3 — وزن الملابس</h3>
-
-                <label for="weight">
-                    أدخل وزن الملابس بالكيلوغرام:
-                </label>
-
-                <input
-                    type="number"
-                    id="weight"
-                    min="1"
-                    max="15"
-                    placeholder="مثال: 5"
-                >
-
-                <button class="next-btn" onclick="startMachine()">
-                    تشغيل الغسالة
-                </button>
-
-            </div>
-
-
-            <!-- النتيجة -->
-            <div id="result" class="result">
-
-                <h3>تم تحديد البرنامج بنجاح ⚙️</h3>
-
-                <p id="resultText"></p>
-
-                <button class="reset-btn" onclick="resetMachine()">
-                    إعادة التجربة
-                </button>
-
-            </div>
-
-        </div>
-    </div>
-
-</section>
-
-</main>
-
-
-<footer>
-    ElectroLab — مشاريع ودروس الهندسة الكهربائية
-</footer>
-
-
-<script>
-
-function showPage(pageId) {
-
-    document.querySelectorAll(".page").forEach(page => {
-        page.classList.remove("active");
-    });
-
-    document.getElementById(pageId).classList.add("active");
-}
-
-
-// المرحلة الأولى → الثانية
-function goToStep2() {
-
-    const material = document.getElementById("material").value;
-
-    if (material === "") {
-        alert("اختر نوع المادة أولاً.");
-        return;
-    }
-
-    document.getElementById("step1").classList.remove("active");
-    document.getElementById("step2").classList.add("active");
-}
-
-
-// المرحلة الثانية → الثالثة
-function goToStep3() {
-
-    const dirt = document.getElementById("dirt").value;
-
-    if (dirt === "") {
-        alert("اختر درجة الاتساخ أولاً.");
-        return;
-    }
-
-    document.getElementById("step2").classList.remove("active");
-    document.getElementById("step3").classList.add("active");
-}
-
-
-// تشغيل النظام
-function startMachine() {
-
-    const material = document.getElementById("material").value;
-    const dirt = document.getElementById("dirt").value;
-    const weight = Number(document.getElementById("weight").value);
-
-    if (!weight || weight <= 0) {
-        alert("أدخل وزنًا صحيحًا.");
-        return;
-    }
-
-    let temperature;
-    let duration;
-    let rpm;
-
-    // القطن
-    if (material === "cotton") {
-
-        if (dirt === "light") {
-
-            if (weight <= 5) {
-                temperature = 30;
-                duration = 45;
-                rpm = 800;
-            } else {
-                temperature = 40;
-                duration = 55;
-                rpm = 900;
-            }
-
-        } else if (dirt === "medium") {
-
-            temperature = 40;
-            duration = 65;
-            rpm = 1000;
-
-        } else {
-
-            temperature = 60;
-            duration = 80;
-            rpm = 1000;
-        }
-    }
-
-    // الأقمشة الصناعية
-    else if (material === "synthetic") {
-
-        if (dirt === "light") {
-
-            temperature = 30;
-            duration = 40;
-            rpm = 700;
-
-        } else if (dirt === "medium") {
-
-            temperature = 40;
-            duration = 55;
-            rpm = 800;
-
-        } else {
-
-            temperature = 40;
-            duration = 70;
-            rpm = 900;
-        }
-    }
-
-    // الصوف
-    else if (material === "wool") {
-
-        temperature = 30;
-        duration = 35;
-        rpm = 500;
-    }
-
-    document.getElementById("resultText").innerHTML =
-        "المادة: " + getMaterialName(material) +
-        "<br>درجة الاتساخ: " + getDirtName(dirt) +
-        "<br>الوزن: " + weight + " kg" +
-        "<br><br>درجة الحرارة: " + temperature + "°C" +
-        "<br>مدة الغسيل: " + duration + " دقيقة" +
-        "<br>سرعة الدوران: " + rpm + " دورة/دقيقة";
-
-    document.getElementById("step3").classList.remove("active");
-    document.getElementById("result").classList.add("show");
-}
-
-
-// أسماء المواد
-function getMaterialName(material) {
-
-    if (material === "cotton") return "قطن";
-    if (material === "synthetic") return "أقمشة صناعية";
-    if (material === "wool") return "صوف";
-
-    return "";
-}
-
-
-// أسماء درجات الاتساخ
-function getDirtName(dirt) {
-
-    if (dirt === "light") return "خفيفة";
-    if (dirt === "medium") return "متوسطة";
-    if (dirt === "heavy") return "شديدة";
-
-    return "";
-}
-
-
-// إعادة التجربة
-function resetMachine() {
-
-    document.getElementById("material").value = "";
-    document.getElementById("dirt").value = "";
-    document.getElementById("weight").value = "";
-
-    document.getElementById("result").classList.remove("show");
-
-    document.getElementById("step2").classList.remove("active");
-    document.getElementById("step3").classList.remove("active");
-
-    document.getElementById("step1").classList.add("active");
-}
-
-</script>
-
-</body>
-</html>
+            self.water = 55
+
+        print(f"Load weight: {self.weight} kg")
+        print(f"Water required: {self.water} L")
+
+    def choose_program(self):
+        print("\n🤖 AI is choosing the best program...")
+
+        if self.fabric == "cotton":
+            self.temperature = 40
+            self.speed = 1000
+
+        elif self.fabric == "wool":
+            self.temperature = 30
+            self.speed = 600
+
+        elif self.fabric == "synthetic":
+            self.temperature = 30
+            self.speed = 800
+
+        if self.dirt_level >= 8:
+            self.temperature += 10
+
+        print(f"Temperature: {self.temperature}°C")
+        print(f"Spin speed: {self.speed} RPM")
+
+    def washing(self):
+        print("\n💧 Filling water...")
+        print("🫧 Adding detergent...")
+        print("🔄 Washing...")
+        
+        self.energy += self.temperature * 0.02
+
+    def rinsing(self):
+        print("\n🚿 Rinsing...")
+        self.water += 20
+
+    def spinning(self):
+        print("\n🔄 Spinning...")
+        self.energy += 0.15
+
+    def finish(self):
+        print("\n✅ Washing completed!")
+        print(f"Water used: {self.water} L")
+        print(f"Energy used: {self.energy:.2f} kWh")
+
+
+# -------------------------
+# Main Program
+# -------------------------
+
+machine = SmartWashingMachine()
+
+machine.weight = float(input("Enter laundry weight (kg): "))
+machine.dirt_level = int(input("Enter dirt level (1-10): "))
+machine.fabric = input(
+    "Enter fabric type (cotton / wool / synthetic): "
+).lower()
+
+machine.detect_load()
+machine.choose_program()
+machine.washing()
+machine.rinsing()
+machine.spinning()
+machine.finish()
