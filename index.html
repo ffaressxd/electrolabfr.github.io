@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ElectroLab FR</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #080808;
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* الصفحة الأولى */
+
+        .welcome {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .welcome h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .welcome p {
+            color: #888;
+            margin-bottom: 40px;
+            font-size: 17px;
+        }
+
+        .enter-button {
+            background: #101010;
+            color: white;
+            border: 1px solid #1683ff;
+            padding: 16px 55px;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .enter-button:hover {
+            background: #1683ff;
+            box-shadow: 0 0 20px rgba(22, 131, 255, 0.4);
+        }
+
+
+        /* صفحة الدروس */
+
+        .lessons-page {
+            display: none;
+            min-height: 100vh;
+            padding: 50px 30px;
+        }
+
+        .lessons-page h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 35px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 45px;
+        }
+
+        .lessons {
+            max-width: 1000px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .lesson {
+            background: #101010;
+            border: 1px solid #1683ff;
+            border-radius: 12px;
+            padding: 30px;
+            min-height: 150px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .lesson:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(22, 131, 255, 0.2);
+        }
+
+        .lesson h2 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .lesson p {
+            color: #888;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- الصفحة الأولى -->
+
+    <section class="welcome" id="welcome">
+
+        <h1>مرحبًا بك في ElectroLab FR</h1>
+
+        <p>
+            تعلم الهندسة الكهربائية بطريقة بسيطة
+        </p>
+
+        <button class="enter-button" onclick="enterSite()">
+            دخول
+        </button>
+
+    </section>
+
+
+    <!-- صفحة الدروس -->
+
+    <section class="lessons-page" id="lessonsPage">
+
+        <h1>ElectroLab FR</h1>
+
+        <p class="subtitle">
+            اختر الدرس الذي تريد تعلمه
+        </p>
+
+
+        <div class="lessons">
+
+            <div class="lesson">
+                <h2>الدرس 01</h2>
+                <p>اكتب هنا اسم الدرس ووصفه.</p>
+            </div>
+
+
+            <div class="lesson">
+                <h2>الدرس 02</h2>
+                <p>اكتب هنا اسم الدرس ووصفه.</p>
+            </div>
+
+
+            <div class="lesson">
+                <h2>الدرس 03</h2>
+                <p>اكتب هنا اسم الدرس ووصفه.</p>
+            </div>
+
+
+            <div class="lesson">
+                <h2>الدرس 04</h2>
+                <p>اكتب هنا اسم الدرس ووصفه.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <script>
+
+        function enterSite() {
+
+            document.getElementById("welcome").style.display = "none";
+
+            document.getElementById("lessonsPage").style.display = "block";
+
+        }
+
+    </script>
+
+</body>
+</html>
