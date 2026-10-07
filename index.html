@@ -3,1408 +3,607 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ElectroLab FR</title>
+<title>ElectroLab - الأنظمة الآلية</title>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    font-family:Arial,sans-serif;
-    background:#080808;
-    color:white;
-    min-height:100vh;
-}
-
-button,select,input{
-    font-family:Arial,sans-serif;
-}
-
-/* =========================
-   GENERAL
-========================= */
-
-.page{
-    display:none;
-    min-height:100vh;
-    padding:40px 20px;
-}
-
-.active{
-    display:block;
-}
-
-.container{
-    max-width:1050px;
-    margin:auto;
-}
-
-.blue{
-    color:#1683ff;
-}
-
-.btn{
-    background:#101010;
-    color:white;
-    border:1px solid #1683ff;
-    padding:13px 28px;
-    border-radius:9px;
-    cursor:pointer;
-    transition:.3s;
-}
-
-.btn:hover{
-    background:#1683ff;
-    box-shadow:0 0 20px rgba(22,131,255,.35);
-}
-
-/* =========================
-   HOME
-========================= */
-
-#welcome{
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-}
-
-#welcome h1{
-    font-size:42px;
-    margin-bottom:15px;
-}
-
-#welcome p{
-    color:#888;
-    margin-bottom:40px;
-}
-
-.enter{
-    padding:16px 55px;
-    font-size:18px;
-}
-
-/* =========================
-   LESSONS
-========================= */
-
-.lessons-title{
-    text-align:center;
-    font-size:36px;
-    margin-bottom:10px;
-}
-
-.subtitle{
-    text-align:center;
-    color:#777;
-    margin-bottom:40px;
-}
-
-.lessons{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:20px;
-}
-
-.lesson{
-    background:#101010;
-    border:1px solid #1683ff;
-    border-radius:14px;
-    padding:30px;
-    min-height:150px;
-    cursor:pointer;
-    transition:.3s;
-}
-
-.lesson:hover{
-    transform:translateY(-5px);
-    box-shadow:0 0 20px rgba(22,131,255,.2);
-}
-
-.lesson h2{
-    margin-bottom:15px;
-}
-
-.lesson p{
-    color:#888;
-    line-height:1.6;
-}
-
-/* =========================
-   LESSON
-========================= */
-
-.lesson-title{
-    text-align:center;
-    font-size:36px;
-    margin-bottom:35px;
-}
-
-.box{
-    background:#101010;
-    border:1px solid #1683ff;
-    border-radius:14px;
-    padding:28px;
-    margin-bottom:25px;
-}
-
-.box h2{
-    margin-bottom:18px;
-}
-
-.box p{
-    color:#aaa;
-    line-height:2;
-    font-size:18px;
-}
-
-.code{
-    direction:ltr;
-    text-align:left;
-    background:#050505;
-    border:1px solid #222;
-    border-radius:10px;
-    overflow:auto;
-    padding:20px;
-}
-
-.code pre{
-    color:#ddd;
-    line-height:1.6;
-    font-family:Consolas,monospace;
-    font-size:14px;
-}
-
-.buttons{
-    display:flex;
-    justify-content:center;
-    gap:12px;
-    flex-wrap:wrap;
-    margin-top:18px;
-}
-
-/* =========================
-   WASHING MACHINE APP
-========================= */
-
-.lab-title{
-    text-align:center;
-    font-size:34px;
-    margin-bottom:8px;
-}
-
-.lab-subtitle{
-    text-align:center;
-    color:#777;
-    margin-bottom:30px;
-}
-
-/* machine */
-
-.machine-area{
-    display:flex;
-    justify-content:center;
-    margin-bottom:30px;
-}
-
-.machine{
-    width:330px;
-    background:linear-gradient(145deg,#151515,#080808);
-    border:2px solid #1683ff;
-    border-radius:22px;
-    padding:18px;
-    box-shadow:0 0 35px rgba(22,131,255,.12);
-}
-
-.machine-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:15px;
-}
-
-.machine-name{
-    font-size:14px;
-    color:#1683ff;
-    letter-spacing:1px;
-}
-
-.screen{
-    background:#020202;
-    border:1px solid #1683ff;
-    border-radius:8px;
-    padding:10px;
-    text-align:center;
-    font-family:monospace;
-    color:#1683ff;
-    min-height:58px;
-}
-
-.screen-main{
-    font-size:22px;
-}
-
-.screen-small{
-    font-size:11px;
-    color:#777;
-    margin-top:4px;
-}
-
-.door{
-    position:relative;
-    width:230px;
-    height:230px;
-    margin:22px auto;
-    border-radius:50%;
-    border:12px solid #252525;
-    background:#02060a;
-    overflow:hidden;
-    box-shadow:inset 0 0 35px #000;
-}
-
-.water{
-    position:absolute;
-    bottom:0;
-    left:0;
-    width:100%;
-    height:0%;
-    background:linear-gradient(
-        to top,
-        rgba(22,131,255,.8),
-        rgba(22,131,255,.25)
-    );
-    transition:height 1s;
-}
-
-.clothes{
-    position:absolute;
-    width:100px;
-    height:65px;
-    left:65px;
-    bottom:18px;
-    background:#777;
-    border-radius:45%;
-    opacity:.8;
-    transition:transform .4s;
-}
-
-.rotating{
-    animation:spin 1s linear infinite;
-}
-
-.fast{
-    animation:spin .18s linear infinite;
-}
-
-@keyframes spin{
-    from{transform:rotate(0deg);}
-    to{transform:rotate(360deg);}
-}
-
-.machine-controls{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.knob{
-    width:42px;
-    height:42px;
-    border:2px solid #1683ff;
-    border-radius:50%;
-    background:#111;
-}
-
-.machine-led{
-    width:9px;
-    height:9px;
-    border-radius:50%;
-    background:#1683ff;
-    box-shadow:0 0 12px #1683ff;
-}
-
-/* settings */
-
-.settings{
-    background:#101010;
-    border:1px solid #1683ff;
-    border-radius:14px;
-    padding:25px;
-    margin-bottom:20px;
-}
-
-.settings h2{
-    margin-bottom:20px;
-}
-
-.setting-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
-}
-
-.setting label{
-    display:block;
-    color:#999;
-    margin-bottom:8px;
-}
-
-.setting input,
-.setting select{
-    width:100%;
-    background:#050505;
-    color:white;
-    border:1px solid #333;
-    border-radius:8px;
-    padding:12px;
-}
-
-.setting input:focus,
-.setting select:focus{
-    outline:none;
-    border-color:#1683ff;
-}
-
-.auto{
-    width:100%;
-    margin-top:20px;
-}
-
-/* data */
-
-.data{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-    margin-bottom:20px;
-}
-
-.data-card{
-    background:#101010;
-    border:1px solid #222;
-    border-radius:10px;
-    padding:15px;
-    text-align:center;
-}
-
-.data-card span{
-    display:block;
-    color:#777;
-    font-size:12px;
-    margin-bottom:7px;
-}
-
-.data-card strong{
-    font-size:18px;
-}
-
-/* progress */
-
-.progress-box{
-    background:#101010;
-    border:1px solid #1683ff;
-    border-radius:14px;
-    padding:22px;
-    margin-bottom:20px;
-}
-
-.progress-info{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:10px;
-}
-
-.progress-bar{
-    height:12px;
-    background:#050505;
-    border-radius:20px;
-    overflow:hidden;
-}
-
-.progress-fill{
-    height:100%;
-    width:0%;
-    background:#1683ff;
-    transition:width .5s;
-    box-shadow:0 0 12px rgba(22,131,255,.5);
-}
-
-/* log */
-
-.log{
-    background:#050505;
-    border:1px solid #222;
-    border-radius:10px;
-    padding:18px;
-    min-height:170px;
-    direction:ltr;
-    text-align:left;
-    font-family:Consolas,monospace;
-    color:#aaa;
-    line-height:1.7;
-    white-space:pre-wrap;
-    margin-bottom:20px;
-}
-
-.start{
-    width:100%;
-    font-size:18px;
-    padding:16px;
-}
-
-.reset{
-    display:block;
-    margin:15px auto;
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:650px){
-
-    #welcome h1{
-        font-size:32px;
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
     }
 
-    .lesson-title,
-    .lab-title,
-    .lessons-title{
-        font-size:28px;
+    body {
+        background: #0b1220;
+        color: white;
     }
 
-    .setting-grid{
-        grid-template-columns:1fr;
+    header {
+        background: #111c30;
+        padding: 20px 8%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #263650;
     }
 
-    .data{
-        grid-template-columns:repeat(2,1fr);
+    header h1 {
+        color: #38bdf8;
     }
 
-    .machine{
-        width:300px;
+    nav button {
+        background: none;
+        border: none;
+        color: white;
+        margin: 0 8px;
+        cursor: pointer;
+        font-size: 16px;
     }
 
-    .door{
-        width:210px;
-        height:210px;
+    nav button:hover {
+        color: #38bdf8;
     }
 
-    .clothes{
-        left:55px;
+    main {
+        width: 84%;
+        max-width: 1100px;
+        margin: 40px auto;
     }
 
-    .box{
-        padding:20px;
+    .page {
+        display: none;
     }
 
-    .code pre{
-        font-size:12px;
+    .page.active {
+        display: block;
     }
-}
+
+    .hero {
+        text-align: center;
+        padding: 50px 20px;
+    }
+
+    .hero h2 {
+        font-size: 42px;
+        color: #38bdf8;
+        margin-bottom: 15px;
+    }
+
+    .hero p {
+        color: #b8c4d8;
+        font-size: 18px;
+        line-height: 1.8;
+    }
+
+    .card {
+        background: #111c30;
+        border: 1px solid #263650;
+        border-radius: 15px;
+        padding: 25px;
+        margin-top: 25px;
+    }
+
+    .card h2,
+    .card h3 {
+        color: #38bdf8;
+        margin-bottom: 15px;
+    }
+
+    .card p {
+        color: #d1d9e6;
+        line-height: 1.9;
+    }
+
+    .washing-machine {
+        max-width: 600px;
+        margin: 30px auto;
+        background: #111c30;
+        padding: 30px;
+        border-radius: 20px;
+        border: 1px solid #263650;
+    }
+
+    .step {
+        display: none;
+    }
+
+    .step.active {
+        display: block;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+        color: #dbeafe;
+        font-size: 18px;
+    }
+
+    select,
+    input {
+        width: 100%;
+        padding: 13px;
+        border-radius: 8px;
+        border: 1px solid #334155;
+        background: #0b1220;
+        color: white;
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .next-btn,
+    .reset-btn {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        margin: 5px;
+    }
+
+    .next-btn {
+        background: #38bdf8;
+        color: #06111f;
+    }
+
+    .reset-btn {
+        background: #334155;
+        color: white;
+    }
+
+    .result {
+        display: none;
+        margin-top: 25px;
+        padding: 20px;
+        background: #0f2435;
+        border: 1px solid #38bdf8;
+        border-radius: 12px;
+    }
+
+    .result.show {
+        display: block;
+    }
+
+    .result h3 {
+        color: #38bdf8;
+        margin-bottom: 10px;
+    }
+
+    pre {
+        direction: ltr;
+        text-align: left;
+        background: #050b14;
+        color: #dbeafe;
+        padding: 20px;
+        border-radius: 12px;
+        overflow-x: auto;
+        line-height: 1.6;
+        margin-top: 20px;
+    }
+
+    footer {
+        text-align: center;
+        padding: 30px;
+        margin-top: 50px;
+        color: #718096;
+        border-top: 1px solid #263650;
+    }
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-HOME
-========================= -->
+<header>
+    <h1>ElectroLab</h1>
 
-<section id="welcome">
+    <nav>
+        <button onclick="showPage('home')">الرئيسية</button>
+        <button onclick="showPage('lesson')">الدرس</button>
+        <button onclick="showPage('experiment')">تجربة الغسالة</button>
+    </nav>
+</header>
 
-    <h1>مرحبًا بك في ElectroLab FR</h1>
+<main>
 
-    <p>تعلم الهندسة الكهربائية بطريقة بسيطة</p>
+<!-- الصفحة الرئيسية -->
+<section id="home" class="page active">
 
-    <button class="btn enter"
-            onclick="showPage('lessonsPage')">
-        دخول
-    </button>
+    <div class="hero">
+        <h2>الأنظمة الآلية</h2>
+        <p>
+            تعلّم كيف تعمل الأنظمة الآلية من خلال مثال تطبيقي
+            لنظام غسالة ذكية.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>مرحبًا بك في ElectroLab</h2>
+        <p>
+            منصة تعليمية مبسطة لمشاريع ودروس الهندسة الكهربائية
+            والأنظمة الآلية.
+        </p>
+    </div>
 
 </section>
 
 
-<!-- =========================
-LESSONS
-========================= -->
+<!-- صفحة الدرس -->
+<section id="lesson" class="page">
 
-<section id="lessonsPage" class="page">
+    <div class="card">
+        <h2>درس: نظام الغسالة الآلي</h2>
 
-<div class="container">
+        <p>
+            الغسالة الآلية هي نظام يستقبل مجموعة من المدخلات،
+            ثم يعالج هذه المعلومات ويحدد البرنامج المناسب
+            لتنفيذ عملية الغسيل.
+        </p>
 
-    <h1 class="lessons-title">
-        ElectroLab FR
-    </h1>
+        <h3>مراحل عمل النظام</h3>
 
-    <p class="subtitle">
-        اختر الدرس الذي تريد الإطلاع عليه
-    </p>
+        <p>
+            يعتمد النظام على ثلاث مدخلات رئيسية:
+        </p>
 
-    <div class="lessons">
+        <p>
+            1. نوع المادة<br>
+            2. درجة الاتساخ<br>
+            3. وزن الملابس
+        </p>
 
-        <div class="lesson"
-             onclick="showPage('lessonPage')">
+        <p>
+            بعد الحصول على هذه المعلومات يقوم النظام بتحليلها
+            وتحديد برنامج الغسيل المناسب، مثل درجة حرارة الماء،
+            مدة الغسيل وسرعة الدوران.
+        </p>
 
-            <h2>الدرس 01 : الأنظمة الآلية</h2>
+        <h3>كود Python للنظام</h3>
 
-            <p>
-                الغسالة الذكية كنظام آلي مبرمج.
-            </p>
+        <!-- الكود موجود هنا فقط في صفحة الدرس -->
+        <pre><code>
+def washing_machine(material, dirt_level, weight):
 
-        </div>
+    if material == "cotton":
 
-        <div class="lesson">
-            <h2>الدرس 02</h2>
-            <p>لم يتم تحديده بعد</p>
-        </div>
+        if dirt_level == "light":
+            if weight <= 5:
+                temperature = 30
+                duration = 45
+                rpm = 800
+            else:
+                temperature = 40
+                duration = 55
+                rpm = 900
 
-        <div class="lesson">
-            <h2>الدرس 03</h2>
-            <p>لم يتم تحديده بعد</p>
-        </div>
+        elif dirt_level == "medium":
+            temperature = 40
+            duration = 65
+            rpm = 1000
 
-        <div class="lesson">
-            <h2>الدرس 04</h2>
-            <p>لم يتم تحديده بعد</p>
-        </div>
+        else:
+            temperature = 60
+            duration = 80
+            rpm = 1000
+
+    elif material == "synthetic":
+
+        if dirt_level == "light":
+            temperature = 30
+            duration = 40
+            rpm = 700
+
+        elif dirt_level == "medium":
+            temperature = 40
+            duration = 55
+            rpm = 800
+
+        else:
+            temperature = 40
+            duration = 70
+            rpm = 900
+
+    elif material == "wool":
+
+        temperature = 30
+        duration = 35
+        rpm = 500
+
+    else:
+
+        temperature = 30
+        duration = 45
+        rpm = 600
+
+    return temperature, duration, rpm
+        </code></pre>
+
+        <h3>ملاحظة</h3>
+
+        <p>
+            هذا الكود يمثل الجانب البرمجي من النظام الآلي.
+            أما تجربة الغسالة الموجودة في الصفحة الأخرى فهي
+            محاكاة تفاعلية للنظام ولا تعرض الكود للمستخدم.
+        </p>
 
     </div>
 
-</div>
-
 </section>
 
 
-<!-- =========================
-LESSON 01
-========================= -->
+<!-- تجربة الغسالة -->
+<section id="experiment" class="page">
 
-<section id="lessonPage" class="page">
+    <div class="card">
+        <h2>تجربة الغسالة الآلية</h2>
 
-<div class="container">
+        <p>
+            اختر الإعدادات بالترتيب، وسيقوم النظام بتحديد
+            برنامج الغسيل المناسب.
+        </p>
 
-<h1 class="lesson-title">
-    الدرس 01 : الأنظمة الآلية
-</h1>
+        <div class="washing-machine">
 
-<div class="box">
+            <!-- المرحلة 1: المادة -->
+            <div id="step1" class="step active">
 
-<h2>الغسالة الذكية</h2>
+                <h3>المرحلة 1 — نوع المادة</h3>
 
-<p>
-الغسالة الذكية هي نظام آلي مبرمج يقوم بتحليل وزن الملابس ونوع القماش ودرجة الاتساخ، ثم يختار تلقائيًا كمية الماء ودرجة الحرارة وسرعة العصر المناسبة، وينفذ مراحل الغسيل والشطف والعصر مع حساب استهلاك الماء والطاقة.
-</p>
+                <label for="material">
+                    اختر نوع الملابس:
+                </label>
 
-</div>
+                <select id="material">
+                    <option value="">-- اختر المادة --</option>
+                    <option value="cotton">قطن</option>
+                    <option value="synthetic">أقمشة صناعية</option>
+                    <option value="wool">صوف</option>
+                </select>
 
+                <button class="next-btn" onclick="goToStep2()">
+                    التالي
+                </button>
 
-<div class="box">
-
-<h2>Smart Washing Machine</h2>
-
-<div class="code">
-
-<pre># Smart Washing Machine
-# Automated System
-
-class SmartWashingMachine:
-
-    def __init__(self):
-        self.weight = 0
-        self.dirt_level = 0
-        self.fabric = ""
-        self.water = 0
-        self.temperature = 20
-        self.speed = 0
-        self.energy = 0
-
-    def detect_load(self):
-        print("\n🔍 Detecting laundry...")
-        
-        if self.weight &lt;= 3:
-            self.water = 25
-        elif self.weight &lt;= 6:
-            self.water = 40
-        else:
-            self.water = 55
-
-        print(f"Load weight: {self.weight} kg")
-        print(f"Water required: {self.water} L")
-
-    def choose_program(self):
-        print("\n🤖 AI is choosing the best program...")
-
-        if self.fabric == "cotton":
-            self.temperature = 40
-            self.speed = 1000
-
-        elif self.fabric == "wool":
-            self.temperature = 30
-            self.speed = 600
-
-        elif self.fabric == "synthetic":
-            self.temperature = 30
-            self.speed = 800
-
-        if self.dirt_level &gt;= 8:
-            self.temperature += 10
-
-        print(f"Temperature: {self.temperature}°C")
-        print(f"Spin speed: {self.speed} RPM")
-
-    def washing(self):
-        print("\n💧 Filling water...")
-        print("🫧 Adding detergent...")
-        print("🔄 Washing...")
-        
-        self.energy += self.temperature * 0.02
-
-    def rinsing(self):
-        print("\n🚿 Rinsing...")
-        self.water += 20
-
-    def spinning(self):
-        print("\n🔄 Spinning...")
-        self.energy += 0.15
-
-    def finish(self):
-        print("\n✅ Washing completed!")
-        print(f"Water used: {self.water} L")
-        print(f"Energy used: {self.energy:.2f} kWh")
+            </div>
 
 
-machine = SmartWashingMachine()
+            <!-- المرحلة 2: درجة الاتساخ -->
+            <div id="step2" class="step">
 
-machine.weight = float(input("Enter laundry weight (kg): "))
-machine.dirt_level = int(input("Enter dirt level (1-10): "))
-machine.fabric = input(
-    "Enter fabric type (cotton / wool / synthetic): "
-).lower()
+                <h3>المرحلة 2 — درجة الاتساخ</h3>
 
-machine.detect_load()
-machine.choose_program()
-machine.washing()
-machine.rinsing()
-machine.spinning()
-machine.finish()</pre>
+                <label for="dirt">
+                    اختر درجة الاتساخ:
+                </label>
 
-</div>
+                <select id="dirt">
+                    <option value="">-- اختر درجة الاتساخ --</option>
+                    <option value="light">خفيفة</option>
+                    <option value="medium">متوسطة</option>
+                    <option value="heavy">شديدة</option>
+                </select>
 
-<div class="buttons">
+                <button class="next-btn" onclick="goToStep3()">
+                    التالي
+                </button>
 
-<button class="btn" onclick="copyCode()">
-Copy Code
-</button>
+            </div>
 
-<button class="btn"
-        onclick="showPage('labPage')">
-▶ Try the Code
-</button>
 
-</div>
+            <!-- المرحلة 3: الوزن -->
+            <div id="step3" class="step">
 
-</div>
+                <h3>المرحلة 3 — وزن الملابس</h3>
 
-<button class="btn"
-        onclick="showPage('lessonsPage')">
-Back to Lessons
-</button>
+                <label for="weight">
+                    أدخل وزن الملابس بالكيلوغرام:
+                </label>
 
-</div>
+                <input
+                    type="number"
+                    id="weight"
+                    min="1"
+                    max="15"
+                    placeholder="مثال: 5"
+                >
+
+                <button class="next-btn" onclick="startMachine()">
+                    تشغيل الغسالة
+                </button>
+
+            </div>
+
+
+            <!-- النتيجة -->
+            <div id="result" class="result">
+
+                <h3>تم تحديد البرنامج بنجاح ⚙️</h3>
+
+                <p id="resultText"></p>
+
+                <button class="reset-btn" onclick="resetMachine()">
+                    إعادة التجربة
+                </button>
+
+            </div>
+
+        </div>
+    </div>
 
 </section>
 
+</main>
 
-<!-- =========================
-SMART WASHING MACHINE
-========================= -->
 
-<section id="labPage" class="page">
-
-<div class="container">
-
-<h1 class="lab-title">
-🐍 Smart Washing Machine
-</h1>
-
-<p class="lab-subtitle">
-Interactive Automated System
-</p>
-
-
-<!-- MACHINE -->
-
-<div class="machine-area">
-
-<div class="machine">
-
-<div class="machine-top">
-
-<span class="machine-name">
-ELECTROLAB
-</span>
-
-<div class="machine-led"></div>
-
-</div>
-
-
-<div class="screen">
-
-<div id="screenMain"
-     class="screen-main">
-READY
-</div>
-
-<div id="screenSmall"
-     class="screen-small">
-SMART MODE
-</div>
-
-</div>
-
-
-<div class="door">
-
-<div id="water"
-     class="water"></div>
-
-<div id="clothes"
-     class="clothes"></div>
-
-</div>
-
-
-<div class="machine-controls">
-
-<div class="knob"></div>
-
-<strong id="machineStatus">
-READY
-</strong>
-
-<div class="knob"></div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- SETTINGS -->
-
-<div class="settings">
-
-<h2>⚙️ Washing Settings</h2>
-
-<div class="setting-grid">
-
-
-<div class="setting">
-
-<label>
-Laundry Weight
-</label>
-
-<input id="weight"
-       type="number"
-       min="0.5"
-       max="10"
-       value="5"
-       step="0.5">
-
-</div>
-
-
-<div class="setting">
-
-<label>
-Dirt Level
-</label>
-
-<input id="dirt"
-       type="range"
-       min="1"
-       max="10"
-       value="8"
-       oninput="updateDirt()">
-
-<div id="dirtValue"
-     style="color:#1683ff;margin-top:6px">
-8 / 10
-</div>
-
-</div>
-
-
-<div class="setting">
-
-<label>
-Fabric Type
-</label>
-
-<select id="fabric">
-
-<option value="cotton">
-Cotton
-</option>
-
-<option value="wool">
-Wool
-</option>
-
-<option value="synthetic">
-Synthetic
-</option>
-
-</select>
-
-</div>
-
-</div>
-
-
-<button class="btn auto"
-        onclick="autoProgram()">
-
-🤖 AI AUTO PROGRAM
-
-</button>
-
-</div>
-
-
-<!-- DATA -->
-
-<div class="data">
-
-<div class="data-card">
-<span>WATER</span>
-<strong id="waterData">40 L</strong>
-</div>
-
-<div class="data-card">
-<span>TEMPERATURE</span>
-<strong id="tempData">50°C</strong>
-</div>
-
-<div class="data-card">
-<span>SPIN SPEED</span>
-<strong id="speedData">1000 RPM</strong>
-</div>
-
-<div class="data-card">
-<span>ENERGY</span>
-<strong id="energyData">0.00 kWh</strong>
-</div>
-
-</div>
-
-
-<!-- PROGRESS -->
-
-<div class="progress-box">
-
-<div class="progress-info">
-
-<strong id="stage">
-READY
-</strong>
-
-<strong id="percent">
-0%
-</strong>
-
-</div>
-
-<div class="progress-bar">
-
-<div id="progress"
-     class="progress-fill">
-</div>
-
-</div>
-
-</div>
-
-
-<!-- LOG -->
-
-<div class="log"
-     id="log">SYSTEM READY
-Waiting for program...</div>
-
-
-<button id="startButton"
-        class="btn start"
-        onclick="startWashing()">
-
-▶ START WASHING
-
-</button>
-
-
-<button class="btn reset"
-        onclick="resetMachine()">
-
-RESET
-
-</button>
-
-
-<button class="btn"
-        style="display:block;margin:20px auto"
-        onclick="showPage('lessonPage')">
-
-Back to Lesson
-
-</button>
-
-</div>
-
-</section>
+<footer>
+    ElectroLab — مشاريع ودروس الهندسة الكهربائية
+</footer>
 
 
 <script>
 
-/* =========================
-PAGE SYSTEM
-========================= */
+function showPage(pageId) {
 
-function showPage(id){
-
-    document.querySelectorAll(".page").forEach(function(page){
+    document.querySelectorAll(".page").forEach(page => {
         page.classList.remove("active");
     });
 
-    document.getElementById("welcome").style.display="none";
-
-    document.getElementById(id).classList.add("active");
-
-    window.scrollTo(0,0);
+    document.getElementById(pageId).classList.add("active");
 }
 
 
-/* =========================
-COPY CODE
-========================= */
+// المرحلة الأولى → الثانية
+function goToStep2() {
 
-function copyCode(){
+    const material = document.getElementById("material").value;
 
-    const code = document.querySelector(".code pre").innerText;
-
-    navigator.clipboard.writeText(code);
-
-    alert("Code copied successfully!");
-}
-
-
-/* =========================
-DIRT
-========================= */
-
-function updateDirt(){
-
-    const value =
-        document.getElementById("dirt").value;
-
-    document.getElementById("dirtValue").innerText =
-        value + " / 10";
-}
-
-
-/* =========================
-SMART PROGRAM
-========================= */
-
-let program = {
-    water:40,
-    temperature:50,
-    speed:1000,
-    energy:0.95
-};
-
-
-function calculateProgram(){
-
-    const weight =
-        Number(document.getElementById("weight").value);
-
-    const dirt =
-        Number(document.getElementById("dirt").value);
-
-    const fabric =
-        document.getElementById("fabric").value;
-
-
-    let water;
-
-    if(weight <= 3){
-        water=25;
-    }
-    else if(weight <= 6){
-        water=40;
-    }
-    else{
-        water=55;
-    }
-
-
-    let temperature;
-    let speed;
-
-
-    if(fabric==="cotton"){
-        temperature=40;
-        speed=1000;
-    }
-
-    else if(fabric==="wool"){
-        temperature=30;
-        speed=600;
-    }
-
-    else{
-        temperature=30;
-        speed=800;
-    }
-
-
-    if(dirt >= 8){
-        temperature += 10;
-    }
-
-
-    const energy =
-        ((temperature * 0.02) + 0.15)
-        .toFixed(2);
-
-
-    program={
-        water:water,
-        temperature:temperature,
-        speed:speed,
-        energy:energy
-    };
-}
-
-
-function autoProgram(){
-
-    calculateProgram();
-
-    document.getElementById("waterData").innerText =
-        program.water + " L";
-
-    document.getElementById("tempData").innerText =
-        program.temperature + "°C";
-
-    document.getElementById("speedData").innerText =
-        program.speed + " RPM";
-
-    document.getElementById("energyData").innerText =
-        program.energy + " kWh";
-
-
-    document.getElementById("screenMain").innerText =
-        program.temperature + "°C";
-
-    document.getElementById("screenSmall").innerText =
-        program.speed + " RPM";
-
-    document.getElementById("machineStatus").innerText =
-        "PROGRAM READY";
-
-
-    addLog(
-        "🤖 AI ANALYSIS COMPLETE\n" +
-        "✓ Load detected\n" +
-        "✓ Fabric analyzed\n" +
-        "✓ Dirt level analyzed\n\n" +
-        "SMART PROGRAM SELECTED\n" +
-        "Water: " + program.water + " L\n" +
-        "Temperature: " + program.temperature + "°C\n" +
-        "Spin Speed: " + program.speed + " RPM\n" +
-        "Energy: " + program.energy + " kWh"
-    );
-}
-
-
-/* =========================
-LOG
-========================= */
-
-function addLog(text){
-
-    document.getElementById("log").innerText +=
-        "\n\n" + text;
-}
-
-
-/* =========================
-WASHING
-========================= */
-
-let washing=false;
-
-
-function wait(ms){
-
-    return new Promise(function(resolve){
-        setTimeout(resolve,ms);
-    });
-
-}
-
-
-async function startWashing(){
-
-    if(washing){
+    if (material === "") {
+        alert("اختر نوع المادة أولاً.");
         return;
     }
 
-    washing=true;
-
-    document.getElementById("startButton").disabled=true;
-
-    calculateProgram();
-
-
-    /* LOCK */
-
-    await stage(
-        "LOCKING DOOR",
-        5,
-        "🔒 Door locked"
-    );
-
-
-    /* FILLING */
-
-    document.getElementById("screenMain").innerText="FILL";
-
-    document.getElementById("screenSmall").innerText=
-        program.water+" L";
-
-    document.getElementById("machineStatus").innerText=
-        "FILLING";
-
-
-    for(let i=0;i<=100;i+=5){
-
-        document.getElementById("water").style.height =
-            i+"%";
-
-        await wait(80);
-
-    }
-
-    addLog("💧 Water filling completed");
-
-
-    /* DETERGENT */
-
-    await stage(
-        "DETERGENT",
-        25,
-        "🫧 Adding detergent..."
-    );
-
-
-    /* WASHING */
-
-    document.getElementById("screenMain").innerText=
-        "WASH";
-
-    document.getElementById("machineStatus").innerText=
-        "WASHING";
-
-    document.getElementById("clothes")
-        .classList.add("rotating");
-
-
-    for(let i=25;i<=60;i++){
-
-        updateProgress(
-            i,
-            "WASHING"
-        );
-
-        await wait(55);
-
-    }
-
-    addLog("🔄 Washing cycle completed");
-
-
-    /* RINSING */
-
-    document.getElementById("screenMain").innerText=
-        "RINSE";
-
-    document.getElementById("machineStatus").innerText=
-        "RINSING";
-
-    document.getElementById("water").style.height="70%";
-
-
-    for(let i=60;i<=80;i++){
-
-        updateProgress(
-            i,
-            "RINSING"
-        );
-
-        await wait(70);
-
-    }
-
-    addLog("🚿 Rinsing completed");
-
-
-    /* SPINNING */
-
-    document.getElementById("screenMain").innerText=
-        "SPIN";
-
-    document.getElementById("screenSmall").innerText=
-        program.speed+" RPM";
-
-    document.getElementById("machineStatus").innerText=
-        "SPINNING";
-
-    document.getElementById("water").style.height="5%";
-
-    document.getElementById("clothes")
-        .classList.remove("rotating");
-
-    document.getElementById("clothes")
-        .classList.add("fast");
-
-
-    for(let i=80;i<=99;i++){
-
-        updateProgress(
-            i,
-            "SPINNING"
-        );
-
-        await wait(55);
-
-    }
-
-
-    document.getElementById("clothes")
-        .classList.remove("fast");
-
-
-    /* COMPLETE */
-
-    updateProgress(
-        100,
-        "COMPLETED"
-    );
-
-    document.getElementById("screenMain").innerText=
-        "DONE";
-
-    document.getElementById("screenSmall").innerText=
-        "100%";
-
-    document.getElementById("machineStatus").innerText=
-        "COMPLETED";
-
-    document.getElementById("water").style.height="0%";
-
-
-    addLog(
-        "✅ WASHING COMPLETED!\n\n" +
-        "Water used: " +
-        (program.water + 20) +
-        " L\n" +
-        "Temperature: " +
-        program.temperature +
-        "°C\n" +
-        "Spin Speed: " +
-        program.speed +
-        " RPM\n" +
-        "Energy used: " +
-        program.energy +
-        " kWh"
-    );
-
-
-    washing=false;
-
-    document.getElementById("startButton").disabled=false;
+    document.getElementById("step1").classList.remove("active");
+    document.getElementById("step2").classList.add("active");
 }
 
 
-async function stage(name,percent,message){
+// المرحلة الثانية → الثالثة
+function goToStep3() {
 
-    updateProgress(
-        percent,
-        name
-    );
+    const dirt = document.getElementById("dirt").value;
 
-    addLog(message);
+    if (dirt === "") {
+        alert("اختر درجة الاتساخ أولاً.");
+        return;
+    }
 
-    await wait(1000);
-
+    document.getElementById("step2").classList.remove("active");
+    document.getElementById("step3").classList.add("active");
 }
 
 
-function updateProgress(percent,stage){
+// تشغيل النظام
+function startMachine() {
 
-    document.getElementById("progress").style.width =
-        percent+"%";
+    const material = document.getElementById("material").value;
+    const dirt = document.getElementById("dirt").value;
+    const weight = Number(document.getElementById("weight").value);
 
-    document.getElementById("percent").innerText =
-        percent+"%";
+    if (!weight || weight <= 0) {
+        alert("أدخل وزنًا صحيحًا.");
+        return;
+    }
 
-    document.getElementById("stage").innerText =
-        stage;
+    let temperature;
+    let duration;
+    let rpm;
+
+    // القطن
+    if (material === "cotton") {
+
+        if (dirt === "light") {
+
+            if (weight <= 5) {
+                temperature = 30;
+                duration = 45;
+                rpm = 800;
+            } else {
+                temperature = 40;
+                duration = 55;
+                rpm = 900;
+            }
+
+        } else if (dirt === "medium") {
+
+            temperature = 40;
+            duration = 65;
+            rpm = 1000;
+
+        } else {
+
+            temperature = 60;
+            duration = 80;
+            rpm = 1000;
+        }
+    }
+
+    // الأقمشة الصناعية
+    else if (material === "synthetic") {
+
+        if (dirt === "light") {
+
+            temperature = 30;
+            duration = 40;
+            rpm = 700;
+
+        } else if (dirt === "medium") {
+
+            temperature = 40;
+            duration = 55;
+            rpm = 800;
+
+        } else {
+
+            temperature = 40;
+            duration = 70;
+            rpm = 900;
+        }
+    }
+
+    // الصوف
+    else if (material === "wool") {
+
+        temperature = 30;
+        duration = 35;
+        rpm = 500;
+    }
+
+    document.getElementById("resultText").innerHTML =
+        "المادة: " + getMaterialName(material) +
+        "<br>درجة الاتساخ: " + getDirtName(dirt) +
+        "<br>الوزن: " + weight + " kg" +
+        "<br><br>درجة الحرارة: " + temperature + "°C" +
+        "<br>مدة الغسيل: " + duration + " دقيقة" +
+        "<br>سرعة الدوران: " + rpm + " دورة/دقيقة";
+
+    document.getElementById("step3").classList.remove("active");
+    document.getElementById("result").classList.add("show");
 }
 
 
-/* =========================
-RESET
-========================= */
+// أسماء المواد
+function getMaterialName(material) {
 
-function resetMachine(){
+    if (material === "cotton") return "قطن";
+    if (material === "synthetic") return "أقمشة صناعية";
+    if (material === "wool") return "صوف";
 
-    washing=false;
+    return "";
+}
 
-    document.getElementById("water").style.height="0%";
 
-    document.getElementById("clothes")
-        .classList.remove("rotating","fast");
+// أسماء درجات الاتساخ
+function getDirtName(dirt) {
 
-    document.getElementById("progress").style.width="0%";
+    if (dirt === "light") return "خفيفة";
+    if (dirt === "medium") return "متوسطة";
+    if (dirt === "heavy") return "شديدة";
 
-    document.getElementById("percent").innerText="0%";
+    return "";
+}
 
-    document.getElementById("stage").innerText="READY";
 
-    document.getElementById("screenMain").innerText="READY";
+// إعادة التجربة
+function resetMachine() {
 
-    document.getElementById("screenSmall").innerText="SMART MODE";
+    document.getElementById("material").value = "";
+    document.getElementById("dirt").value = "";
+    document.getElementById("weight").value = "";
 
-    document.getElementById("machineStatus").innerText="READY";
+    document.getElementById("result").classList.remove("show");
 
-    document.getElementById("energyData").innerText="0.00 kWh";
+    document.getElementById("step2").classList.remove("active");
+    document.getElementById("step3").classList.remove("active");
 
-    document.getElementById("log").innerText=
-        "SYSTEM READY\nWaiting for program...";
-
-    document.getElementById("startButton").disabled=false;
+    document.getElementById("step1").classList.add("active");
 }
 
 </script>
