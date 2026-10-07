@@ -1,4 +1,546 @@
-# Smart Washing Machine
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ElectroLab FR</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #080808;
+            color: white;
+            min-height: 100vh;
+        }
+
+        button {
+            font-family: Arial, sans-serif;
+        }
+
+        /* =========================
+           الصفحة الرئيسية
+        ========================= */
+
+        .welcome {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .welcome h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .welcome p {
+            color: #888;
+            margin-bottom: 40px;
+            font-size: 17px;
+        }
+
+        .enter-button {
+            background: #101010;
+            color: white;
+            border: 1px solid #1683ff;
+            padding: 16px 55px;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .enter-button:hover {
+            background: #1683ff;
+            box-shadow: 0 0 20px rgba(22,131,255,.4);
+        }
+
+
+        /* =========================
+           صفحة الدروس
+        ========================= */
+
+        .lessons-page {
+            display: none;
+            min-height: 100vh;
+            padding: 50px 30px;
+        }
+
+        .lessons-page h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 35px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 45px;
+        }
+
+        .lessons {
+            max-width: 1000px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+            gap: 20px;
+        }
+
+        .lesson {
+            background: #101010;
+            border: 1px solid #1683ff;
+            border-radius: 12px;
+            padding: 30px;
+            min-height: 150px;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .lesson:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(22,131,255,.2);
+        }
+
+        .lesson h2 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .lesson p {
+            color: #888;
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           صفحة الدرس
+        ========================= */
+
+        .lesson-page {
+            display: none;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .lesson-content {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .lesson-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 35px;
+        }
+
+        .content-box {
+            background: #101010;
+            border: 1px solid #1683ff;
+            border-radius: 14px;
+            padding: 30px;
+            margin-bottom: 25px;
+        }
+
+        .content-box h2 {
+            font-size: 23px;
+            margin-bottom: 18px;
+        }
+
+        .content-box p {
+            color: #aaa;
+            font-size: 18px;
+            line-height: 2;
+        }
+
+
+        /* =========================
+           الكود
+        ========================= */
+
+        .code-container {
+            background: #050505;
+            border: 1px solid #1683ff;
+            border-radius: 14px;
+            overflow: hidden;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .code-header {
+            background: #111;
+            padding: 14px 18px;
+            border-bottom: 1px solid #222;
+            color: #1683ff;
+            font-family: monospace;
+        }
+
+        pre {
+            margin: 0;
+            padding: 22px;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        code {
+            color: #ddd;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+
+        /* =========================
+           الأزرار
+        ========================= */
+
+        .button-area {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+
+        .action-button {
+            background: #101010;
+            color: white;
+            border: 1px solid #1683ff;
+            padding: 12px 28px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: .3s;
+        }
+
+        .action-button:hover {
+            background: #1683ff;
+            box-shadow: 0 0 15px rgba(22,131,255,.3);
+        }
+
+        .back-button {
+            display: block;
+            margin: 35px auto 0;
+            background: #101010;
+            color: white;
+            border: 1px solid #1683ff;
+            padding: 13px 30px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+
+        /* =========================
+           Python Lab
+        ========================= */
+
+        .lab-page {
+            display: none;
+            min-height: 100vh;
+            padding: 35px 20px;
+        }
+
+        .lab {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .lab-title {
+            text-align: center;
+            font-size: 34px;
+            margin-bottom: 8px;
+        }
+
+        .lab-subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        .lab-box {
+            background: #101010;
+            border: 1px solid #1683ff;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .lab-box h2 {
+            margin-bottom: 20px;
+        }
+
+        .inputs {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            color: #999;
+            margin-bottom: 8px;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            background: #070707;
+            color: white;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 12px;
+            outline: none;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            border-color: #1683ff;
+        }
+
+        .run-button {
+            width: 100%;
+            margin-top: 20px;
+            background: #101010;
+            color: white;
+            border: 1px solid #1683ff;
+            padding: 15px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 17px;
+        }
+
+        .run-button:hover {
+            background: #1683ff;
+        }
+
+        .editor {
+            width: 100%;
+            min-height: 420px;
+            resize: vertical;
+            background: #050505;
+            color: #ddd;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 18px;
+            direction: ltr;
+            text-align: left;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            outline: none;
+        }
+
+        .editor:focus {
+            border-color: #1683ff;
+        }
+
+        .output {
+            background: #050505;
+            border: 1px solid #222;
+            border-radius: 10px;
+            padding: 18px;
+            min-height: 200px;
+            direction: ltr;
+            text-align: left;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            color: #ddd;
+            font-family: Consolas, monospace;
+            line-height: 1.6;
+        }
+
+        .status {
+            color: #777;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           الهاتف
+        ========================= */
+
+        @media (max-width:600px) {
+
+            .welcome h1 {
+                font-size: 32px;
+            }
+
+            .lessons-page {
+                padding: 40px 20px;
+            }
+
+            .lessons-page h1 {
+                font-size: 30px;
+            }
+
+            .lesson-title,
+            .lab-title {
+                font-size: 28px;
+            }
+
+            .content-box,
+            .lab-box {
+                padding: 20px;
+            }
+
+            .content-box p {
+                font-size: 16px;
+            }
+
+            code {
+                font-size: 12px;
+            }
+
+            pre {
+                padding: 15px;
+            }
+
+            .inputs {
+                grid-template-columns: 1fr;
+            }
+
+            .editor {
+                min-height: 350px;
+                font-size: 12px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     الصفحة الرئيسية
+========================= -->
+
+<section class="welcome" id="welcome">
+
+    <h1>مرحبًا بك في ElectroLab FR</h1>
+
+    <p>
+        تعلم الهندسة الكهربائية بطريقة بسيطة
+    </p>
+
+    <button class="enter-button" onclick="enterSite()">
+        دخول
+    </button>
+
+</section>
+
+
+
+<!-- =========================
+     الدروس
+========================= -->
+
+<section class="lessons-page" id="lessonsPage">
+
+    <h1>ElectroLab FR</h1>
+
+    <p class="subtitle">
+        اختر الدرس الذي تريد الإطلاع عليه
+    </p>
+
+
+    <div class="lessons">
+
+        <div class="lesson" onclick="openLesson()">
+
+            <h2>الدرس 01 : الأنظمة الآلية</h2>
+
+            <p>
+                الغسالة الذكية كنظام آلي مبرمج.
+            </p>
+
+        </div>
+
+
+        <div class="lesson">
+
+            <h2>الدرس 02</h2>
+
+            <p>لم يتم تحديده بعد</p>
+
+        </div>
+
+
+        <div class="lesson">
+
+            <h2>الدرس 03</h2>
+
+            <p>لم يتم تحديده بعد</p>
+
+        </div>
+
+
+        <div class="lesson">
+
+            <h2>الدرس 04</h2>
+
+            <p>لم يتم تحديده بعد</p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     الدرس 01
+========================= -->
+
+<section class="lesson-page" id="lessonPage">
+
+    <div class="lesson-content">
+
+        <h1 class="lesson-title">
+            الدرس 01 : الأنظمة الآلية
+        </h1>
+
+
+        <div class="content-box">
+
+            <h2>الغسالة الذكية</h2>
+
+            <p>
+                الغسالة الذكية هي نظام آلي مبرمج يقوم بتحليل وزن الملابس ونوع القماش ودرجة الاتساخ، ثم يختار تلقائيًا كمية الماء ودرجة الحرارة وسرعة العصر المناسبة، وينفذ مراحل الغسيل والشطف والعصر مع حساب استهلاك الماء والطاقة.
+            </p>
+
+        </div>
+
+
+
+        <!-- الكود موجود هنا فقط -->
+
+        <div class="content-box">
+
+            <h2>Smart Washing Machine</h2>
+
+            <div class="code-container">
+
+                <div class="code-header">
+                    Python 3 — Automated System
+                </div>
+
+                <pre><code id="pythonCode"># Smart Washing Machine
 # Automated System
 
 class SmartWashingMachine:
@@ -15,9 +557,9 @@ class SmartWashingMachine:
     def detect_load(self):
         print("\n🔍 Detecting laundry...")
         
-        if self.weight <= 3:
+        if self.weight &lt;= 3:
             self.water = 25
-        elif self.weight <= 6:
+        elif self.weight &lt;= 6:
             self.water = 40
         else:
             self.water = 55
@@ -40,7 +582,7 @@ class SmartWashingMachine:
             self.temperature = 30
             self.speed = 800
 
-        if self.dirt_level >= 8:
+        if self.dirt_level &gt;= 8:
             self.temperature += 10
 
         print(f"Temperature: {self.temperature}°C")
@@ -84,4 +626,547 @@ machine.choose_program()
 machine.washing()
 machine.rinsing()
 machine.spinning()
-machine.finish()
+machine.finish()</code></pre>
+
+            </div>
+
+
+            <div class="button-area">
+
+                <button class="action-button" onclick="copyCode()">
+                    Copy Code
+                </button>
+
+                <button class="action-button" onclick="openLab()">
+                    ▶ Try the Code
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <button class="back-button" onclick="backToLessons()">
+            Back to Lessons
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     Python Lab
+========================= -->
+
+<section class="lab-page" id="labPage">
+
+    <div class="lab">
+
+        <h1 class="lab-title">
+            🐍 Python Lab
+        </h1>
+
+        <p class="lab-subtitle">
+            Smart Washing Machine — Experiment with the system
+        </p>
+
+
+        <!-- =========================
+             المرحلة 1: Fabric
+        ========================= -->
+
+        <div class="lab-box" id="fabricStep">
+
+            <h2>⚙️ Step 1 — Fabric Type</h2>
+
+            <div class="inputs">
+
+                <div class="input-group">
+
+                    <label>
+                        Fabric Type
+                    </label>
+
+                    <select id="fabric">
+
+                        <option value="">
+                            Select fabric type
+                        </option>
+
+                        <option value="cotton">
+                            Cotton
+                        </option>
+
+                        <option value="wool">
+                            Wool
+                        </option>
+
+                        <option value="synthetic">
+                            Synthetic
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <button class="run-button" onclick="nextToDirt()">
+                Next →
+            </button>
+
+        </div>
+
+
+
+        <!-- =========================
+             المرحلة 2: Dirt
+        ========================= -->
+
+        <div class="lab-box" id="dirtStep" style="display:none;">
+
+            <h2>⚙️ Step 2 — Dirt Level</h2>
+
+            <div class="inputs">
+
+                <div class="input-group">
+
+                    <label>
+                        Dirt Level (1-10)
+                    </label>
+
+                    <input
+                        id="dirt"
+                        type="number"
+                        min="1"
+                        max="10"
+                        placeholder="1 - 10"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <button class="run-button" onclick="nextToWeight()">
+                Next →
+            </button>
+
+        </div>
+
+
+
+        <!-- =========================
+             المرحلة 3: Weight
+        ========================= -->
+
+        <div class="lab-box" id="weightStep" style="display:none;">
+
+            <h2>⚙️ Step 3 — Laundry Weight</h2>
+
+            <div class="inputs">
+
+                <div class="input-group">
+
+                    <label>
+                        Laundry Weight (kg)
+                    </label>
+
+                    <input
+                        id="weight"
+                        type="number"
+                        min="0"
+                        step="0.1"
+                        placeholder="Example: 5"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <button class="run-button" onclick="runPython()">
+                ▶ Run Program
+            </button>
+
+        </div>
+
+
+
+        <!-- =========================
+             Output
+        ========================= -->
+
+        <div class="lab-box">
+
+            <h2>🖥️ Output</h2>
+
+            <div id="output" class="output">
+                Select the settings step by step, then press "Run Program"...
+            </div>
+
+        </div>
+
+
+        <button class="back-button" onclick="backToLesson()">
+            Back to Lesson
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<script>
+
+/* =========================
+   التنقل
+========================= */
+
+function enterSite() {
+
+    document.getElementById("welcome").style.display = "none";
+
+    document.getElementById("lessonsPage").style.display = "block";
+
+}
+
+
+function openLesson() {
+
+    document.getElementById("lessonsPage").style.display = "none";
+
+    document.getElementById("lessonPage").style.display = "block";
+
+    window.scrollTo(0,0);
+
+}
+
+
+function backToLessons() {
+
+    document.getElementById("lessonPage").style.display = "none";
+
+    document.getElementById("lessonsPage").style.display = "block";
+
+    window.scrollTo(0,0);
+
+}
+
+
+function openLab() {
+
+    document.getElementById("lessonPage").style.display = "none";
+
+    document.getElementById("labPage").style.display = "block";
+
+    resetLab();
+
+    window.scrollTo(0,0);
+
+}
+
+
+function backToLesson() {
+
+    document.getElementById("labPage").style.display = "none";
+
+    document.getElementById("lessonPage").style.display = "block";
+
+    window.scrollTo(0,0);
+
+}
+
+
+/* =========================
+   نسخ الكود
+========================= */
+
+function copyCode() {
+
+    const code =
+        document.getElementById("pythonCode").innerText;
+
+    navigator.clipboard.writeText(code).then(function() {
+
+        const buttons =
+            document.querySelectorAll(".action-button");
+
+        buttons[0].innerText = "Copied! ✓";
+
+        setTimeout(function() {
+
+            buttons[0].innerText = "Copy Code";
+
+        },2000);
+
+    });
+
+}
+
+
+/* =========================
+   النظام المتسلسل
+========================= */
+
+function nextToDirt() {
+
+    const fabric =
+        document.getElementById("fabric").value;
+
+    if (fabric === "") {
+
+        alert("Please select the fabric type first.");
+
+        return;
+
+    }
+
+    document.getElementById("fabricStep").style.display = "none";
+
+    document.getElementById("dirtStep").style.display = "block";
+
+}
+
+
+function nextToWeight() {
+
+    const dirt =
+        document.getElementById("dirt").value;
+
+    if (
+        dirt === "" ||
+        Number(dirt) < 1 ||
+        Number(dirt) > 10
+    ) {
+
+        alert("Please enter a dirt level from 1 to 10.");
+
+        return;
+
+    }
+
+    document.getElementById("dirtStep").style.display = "none";
+
+    document.getElementById("weightStep").style.display = "block";
+
+}
+
+
+/* =========================
+   إعادة التجربة
+========================= */
+
+function resetLab() {
+
+    document.getElementById("fabricStep").style.display = "block";
+
+    document.getElementById("dirtStep").style.display = "none";
+
+    document.getElementById("weightStep").style.display = "none";
+
+    document.getElementById("fabric").value = "";
+
+    document.getElementById("dirt").value = "";
+
+    document.getElementById("weight").value = "";
+
+    document.getElementById("output").innerText =
+        'Select the settings step by step, then press "Run Program"...';
+
+}
+
+
+/* =========================
+   Python Lab
+========================= */
+
+let pyodide = null;
+let pyodideLoading = false;
+
+
+async function loadPython() {
+
+    if (pyodide) {
+        return pyodide;
+    }
+
+    if (pyodideLoading) {
+
+        while (!pyodide) {
+
+            await new Promise(
+                resolve => setTimeout(resolve,200)
+            );
+
+        }
+
+        return pyodide;
+    }
+
+
+    pyodideLoading = true;
+
+    document.getElementById("output").innerText =
+        "Loading Python 3...\nPlease wait...";
+
+
+    const script =
+        document.createElement("script");
+
+    script.src =
+        "https://cdn.jsdelivr.net/pyodide/v0.27.2/full/pyodide.js";
+
+    document.head.appendChild(script);
+
+
+    await new Promise((resolve,reject) => {
+
+        script.onload = resolve;
+
+        script.onerror = reject;
+
+    });
+
+
+    pyodide =
+        await loadPyodide();
+
+
+    return pyodide;
+
+}
+
+
+
+async function runPython() {
+
+    const output =
+        document.getElementById("output");
+
+    const weight =
+        document.getElementById("weight").value;
+
+    const dirt =
+        document.getElementById("dirt").value;
+
+    const fabric =
+        document.getElementById("fabric").value;
+
+
+    if (
+        weight === "" ||
+        dirt === "" ||
+        fabric === ""
+    ) {
+
+        output.innerText =
+            "Please complete all settings.";
+
+        return;
+
+    }
+
+
+    output.innerText =
+        "Starting Python 3...\n";
+
+
+    try {
+
+        const python =
+            await loadPython();
+
+
+        python.globals.set(
+            "USER_WEIGHT",
+            Number(weight)
+        );
+
+        python.globals.set(
+            "USER_DIRT",
+            Number(dirt)
+        );
+
+        python.globals.set(
+            "USER_FABRIC",
+            fabric
+        );
+
+
+        /*
+         * لا يوجد محرر كود هنا.
+         * الكود موجود فقط في صفحة الدرس.
+         */
+
+        const finalCode = `
+
+import builtins
+
+_original_input = builtins.input
+
+def custom_input(message=""):
+
+    if "weight" in message.lower():
+        print(message + str(USER_WEIGHT))
+        return str(USER_WEIGHT)
+
+    if "dirt" in message.lower():
+        print(message + str(USER_DIRT))
+        return str(USER_DIRT)
+
+    if "fabric" in message.lower():
+        print(message + USER_FABRIC)
+        return USER_FABRIC
+
+    return _original_input(message)
+
+
+builtins.input = custom_input
+
+
+${document.getElementById("pythonCode").innerText}
+
+`;
+
+
+        let result = "";
+
+
+        python.setStdout({
+
+            batched: (msg) => {
+
+                result += msg + "\n";
+
+            }
+
+        });
+
+
+        await python.runPythonAsync(finalCode);
+
+
+        output.innerText =
+            result || "Program finished successfully.";
+
+
+    } catch (error) {
+
+        output.innerText =
+            "❌ Python Error:\n\n" +
+            error;
+
+    }
+
+}
+
+</script>
+
+
+</body>
+</html>
