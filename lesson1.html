@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>الأنظمة الآلية | electrolab FR</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            background: #05070a;
+
+            color: #eaf2ff;
+
+            font-family: Arial, sans-serif;
+
+        }
+
+
+        /* الشريط العلوي */
+
+        .topbar {
+
+            height: 70px;
+
+            background: #07090d;
+
+            border-bottom: 1px solid #172333;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+        }
+
+
+        .logo {
+
+            color: #268dff;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+        }
+
+
+        .back {
+
+            color: #8b98a9;
+
+            text-decoration: none;
+
+        }
+
+
+        .back:hover {
+
+            color: #2990ff;
+
+        }
+
+
+        /* المحتوى */
+
+        .container {
+
+            width: 92%;
+
+            max-width: 1000px;
+
+            margin: 55px auto 80px;
+
+        }
+
+
+        .title span {
+
+            color: #258cff;
+
+            font-size: 13px;
+
+            letter-spacing: 2px;
+
+        }
+
+
+        .title h1 {
+
+            font-size: 48px;
+
+            margin: 10px 0 35px;
+
+        }
+
+
+        /* التعريف */
+
+        .definition {
+
+            background: #0a0d12;
+
+            border: 1px solid #17375f;
+
+            border-right: 4px solid #258cff;
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .definition h2 {
+
+            margin-top: 0;
+
+        }
+
+
+        .definition p {
+
+            color: #b8c5d5;
+
+            font-size: 17px;
+
+            line-height: 2;
+
+            margin-bottom: 0;
+
+        }
+
+
+        /* صندوق الكود */
+
+        .code-box {
+
+            background: #080b0f;
+
+            border: 1px solid #1b3150;
+
+            border-radius: 18px;
+
+            overflow: hidden;
+
+        }
+
+
+        .code-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 20px 22px;
+
+            background: #0c1118;
+
+            border-bottom: 1px solid #182536;
+
+        }
+
+
+        .code-header h2 {
+
+            margin: 8px 0 0;
+
+        }
+
+
+        .python {
+
+            color: #63aaff;
+
+            background: #0a203d;
+
+            padding: 6px 9px;
+
+            border-radius: 6px;
+
+            font-size: 11px;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .readonly {
+
+            color: #788597;
+
+            background: #11161d;
+
+            padding: 6px 9px;
+
+            border-radius: 6px;
+
+            font-size: 10px;
+
+        }
+
+
+        /* الكود */
+
+        pre {
+
+            margin: 0;
+
+            padding: 25px;
+
+            background: #05070a;
+
+            color: #c9d8ea;
+
+            direction: ltr;
+
+            text-align: left;
+
+            overflow-x: auto;
+
+            font-family: "Courier New", monospace;
+
+            font-size: 13px;
+
+            line-height: 1.65;
+
+            user-select: text;
+
+        }
+
+
+        /* الأزرار */
+
+        .buttons {
+
+            display: flex;
+
+            gap: 12px;
+
+            padding: 20px;
+
+            flex-wrap: wrap;
+
+        }
+
+
+        button,
+        .try-button {
+
+            border: none;
+
+            border-radius: 10px;
+
+            padding: 14px 22px;
+
+            font-weight: bold;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            display: inline-block;
+
+        }
+
+
+        .copy {
+
+            background: #176cff;
+
+            color: white;
+
+        }
+
+
+        .copy:hover {
+
+            background: #2588ff;
+
+        }
+
+
+        .try-button {
+
+            background: #0ca678;
+
+            color: white;
+
+        }
+
+
+        .try-button:hover {
+
+            background: #10bd89;
+
+        }
+
+
+        #message {
+
+            color: #55ffb1;
+
+            font-size: 13px;
+
+            padding: 0 20px 18px;
+
+            display: none;
+
+        }
+
+
+        /* الهاتف */
+
+        @media(max-width:600px) {
+
+            .title h1 {
+
+                font-size: 34px;
+
+            }
+
+            .container {
+
+                width: 94%;
+
+            }
+
+            pre {
+
+                font-size: 11px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- الشريط العلوي -->
+
+    <div class="topbar">
+
+        <div class="logo">
+            electrolab FR
+        </div>
+
+
+        <a href="index.html" class="back">
+            العودة إلى الدروس
+        </a>
+
+    </div>
+
+
+
+    <div class="container">
+
+
+        <!-- عنوان الدرس -->
+
+        <div class="title">
+
+            <span>
+                LESSON 01
+            </span>
+
+            <h1>
+                الأنظمة الآلية
+            </h1>
+
+        </div>
+
+
+
+        <!-- تعريف الأنظمة الآلية -->
+
+        <div class="definition">
+
+            <h2>
+                💡 تعريف الأنظمة الآلية
+            </h2>
+
+
+            <p>
+
+                الغسالة الذكية هي نظام آلي مبرمج يقوم بتحليل وزن الملابس
+                ونوع القماش ودرجة الاتساخ، ثم يختار تلقائيًا كمية الماء
+                ودرجة الحرارة وسرعة العصر المناسبة، وينفذ مراحل الغسيل
+                والشطف والعصر مع حسب استهلاك الماء والطاقة.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- الكود -->
+
+        <div class="code-box">
+
+
+            <div class="code-header">
+
+                <div>
+
+                    <span class="python">
+                        PYTHON
+                    </span>
+
+                    <h2>
+                        Smart Washing Machine
+                    </h2>
+
+                </div>
+
+
+                <span class="readonly">
+                    READ ONLY
+                </span>
+
+            </div>
+
+
+
+<pre id="code">class SmartWashingMachine:
+
+    def __init__(self):
+        self.weight = 0
+        self.dirt_level = 0
+        self.fabric = ""
+        self.water = 0
+        self.temperature = 20
+        self.speed = 0
+        self.energy = 0
+
+    def detect_load(self):
+        print("\n🔍 Detecting laundry...")
+
+        if self.weight &lt;= 3:
+            self.water = 25
+
+        elif self.weight &lt;= 6:
+            self.water = 40
+
+        else:
+            self.water = 55
+
+        print(f"Load weight: {self.weight} kg")
+        print(f"Water required: {self.water} L")
+
+
+    def choose_program(self):
+
+        print("\n🤖 AI is choosing the best program...")
+
+        if self.fabric == "cotton":
+
+            self.temperature = 40
+            self.speed = 1000
+
+        elif self.fabric == "wool":
+
+            self.temperature = 30
+            self.speed = 600
+
+        elif self.fabric == "synthetic":
+
+            self.temperature = 30
+            self.speed = 800
+
+
+        if self.dirt_level &gt;= 8:
+
+            self.temperature += 10
+
+
+        print(f"Temperature: {self.temperature}°C")
+        print(f"Spin speed: {self.speed} RPM")
+
+
+    def washing(self):
+
+        print("\n💧 Filling water...")
+        print("🫧 Adding detergent...")
+        print("🔄 Washing...")
+
+        self.energy += self.temperature * 0.02
+
+
+    def rinsing(self):
+
+        print("\n🚿 Rinsing...")
+
+        self.water += 20
+
+
+    def spinning(self):
+
+        print("\n🔄 Spinning...")
+
+        self.energy += 0.15
+
+
+    def finish(self):
+
+        print("\n✅ Washing completed!")
+
+        print(f"Water used: {self.water} L")
+
+        print(f"Energy used: {self.energy:.2f} kWh")
+
+
+# -------------------------
+# Main Program
+# -------------------------
+
+machine = SmartWashingMachine()
+
+machine.weight = float(
+    input("Enter laundry weight (kg): ")
+)
+
+machine.dirt_level = int(
+    input("Enter dirt level (1-10): ")
+)
+
+machine.fabric = input(
+    "Enter fabric type (cotton / wool / synthetic): "
+).lower()
+
+
+machine.detect_load()
+
+machine.choose_program()
+
+machine.washing()
+
+machine.rinsing()
+
+machine.spinning()
+
+machine.finish()</pre>
+
+
+
+            <!-- الأزرار -->
+
+            <div class="buttons">
+
+                <button
+                    class="copy"
+                    onclick="copyCode()">
+
+                    Copy Code
+
+                </button>
+
+
+                <a
+                    href="try.html"
+                    class="try-button">
+
+                    Try Code
+
+                </a>
+
+            </div>
+
+
+            <div id="message">
+
+                Code copied successfully! ✓
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+<script>
+
+function copyCode() {
+
+    const code =
+        document.getElementById("code").innerText;
+
+    navigator.clipboard.writeText(code);
+
+    const message =
+        document.getElementById("message");
+
+    message.style.display = "block";
+
+    setTimeout(function() {
+
+        message.style.display = "none";
+
+    }, 2000);
+
+}
+
+</script>
+
+
+</body>
+
+</html>
