@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>تجربة الغسالة | electrolab FR</title>
+
+
+    <!-- Python يعمل داخل المتصفح -->
+
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.27.2/full/pyodide.js"></script>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            background: #05070a;
+
+            color: white;
+
+            font-family: Arial, sans-serif;
+
+        }
+
+
+        /* الشريط العلوي */
+
+        .topbar {
+
+            height: 70px;
+
+            background: #07090d;
+
+            border-bottom: 1px solid #172333;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+        }
+
+
+        .logo {
+
+            color: #268dff;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+        }
+
+
+        .back {
+
+            color: #8b98a9;
+
+            text-decoration: none;
+
+        }
+
+
+        .back:hover {
+
+            color: #2990ff;
+
+        }
+
+
+        /* الصفحة */
+
+        .container {
+
+            width: 92%;
+
+            max-width: 900px;
+
+            margin: 50px auto 80px;
+
+        }
+
+
+        .title span {
+
+            color: #258cff;
+
+            font-size: 13px;
+
+            letter-spacing: 2px;
+
+        }
+
+
+        .title h1 {
+
+            font-size: 45px;
+
+            margin: 10px 0;
+
+        }
+
+
+        .title p {
+
+            color: #8793a3;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        /* شكل الغسالة */
+
+        .washing-machine {
+
+            width: 230px;
+
+            margin: 30px auto;
+
+            text-align: center;
+
+        }
+
+
+        .machine-body {
+
+            width: 230px;
+
+            height: 290px;
+
+            background: #11161d;
+
+            border: 2px solid #273442;
+
+            border-radius: 20px;
+
+            padding-top: 30px;
+
+            box-shadow:
+
+                0 0 35px rgba(0, 110, 255, 0.10);
+
+        }
+
+
+        .machine-panel {
+
+            width: 170px;
+
+            height: 35px;
+
+            background: #080b10;
+
+            border: 1px solid #29415d;
+
+            border-radius: 7px;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #3f9aff;
+
+            font-size: 10px;
+
+            letter-spacing: 2px;
+
+        }
+
+
+        .door {
+
+            width: 150px;
+
+            height: 150px;
+
+            border-radius: 50%;
+
+            margin: 28px auto;
+
+            border: 8px solid #303b48;
+
+            background:
+
+                radial-gradient(
+                    circle,
+                    #073a63 0%,
+                    #061a2b 55%,
+                    #02070b 100%
+                );
+
+            box-shadow:
+
+                inset 0 0 25px #000,
+
+                0 0 15px rgba(0, 120, 255, .15);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #54aaff;
+
+            font-size: 10px;
+
+            letter-spacing: 2px;
+
+        }
+
+
+        /* لوحة الاختيارات */
+
+        .controls {
+
+            background: #0a0d12;
+
+            border: 1px solid #17375f;
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+            margin-top: 30px;
+
+        }
+
+
+        .field {
+
+            margin-bottom: 20px;
+
+        }
+
+
+        label {
+
+            display: block;
+
+            color: #aebaca;
+
+            font-size: 14px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        input,
+        select {
+
+            width: 100%;
+
+            padding: 14px;
+
+            background: #05070a;
+
+            color: white;
+
+            border: 1px solid #29394d;
+
+            border-radius: 10px;
+
+            outline: none;
+
+            font-size: 15px;
+
+        }
+
+
+        input:focus,
+        select:focus {
+
+            border-color: #268dff;
+
+        }
+
+
+        .run {
+
+            width: 100%;
+
+            padding: 15px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #176cff;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+
+        .run:hover {
+
+            background: #2588ff;
+
+        }
+
+
+        .run:disabled {
+
+            background: #26364a;
+
+            cursor: wait;
+
+        }
+
+
+        /* شاشة النتائج */
+
+        .terminal {
+
+            margin-top: 25px;
+
+            background: #05070a;
+
+            border: 1px solid #1c2d42;
+
+            border-radius: 15px;
+
+            overflow: hidden;
+
+        }
+
+
+        .terminal-head {
+
+            height: 45px;
+
+            background: #0d1219;
+
+            border-bottom: 1px solid #1b2939;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 0 15px;
+
+            direction: ltr;
+
+        }
+
+
+        .dot {
+
+            width: 10px;
+
+            height: 10px;
+
+            border-radius: 50%;
+
+            background: #526174;
+
+        }
+
+
+        .terminal-name {
+
+            margin-left: 10px;
+
+            color: #728095;
+
+            font-size: 12px;
+
+        }
+
+
+        #output {
+
+            min-height: 250px;
+
+            margin: 0;
+
+            padding: 22px;
+
+            direction: ltr;
+
+            text-align: left;
+
+            white-space: pre-wrap;
+
+            color: #baf7d2;
+
+            font-family: "Courier New", monospace;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+
+            overflow-x: auto;
+
+        }
+
+
+        .status {
+
+            text-align: center;
+
+            color: #697789;
+
+            font-size: 12px;
+
+            margin-top: 15px;
+
+        }
+
+
+        .ready {
+
+            color: #55ffb1;
+
+        }
+
+
+        @media(max-width:600px) {
+
+            .title h1 {
+
+                font-size: 34px;
+
+            }
+
+            .container {
+
+                width: 94%;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- الشريط العلوي -->
+
+    <div class="topbar">
+
+        <div class="logo">
+            electrolab FR
+        </div>
+
+
+        <a href="lesson1.html" class="back">
+            العودة إلى الدرس
+        </a>
+
+    </div>
+
+
+
+    <div class="container">
+
+
+        <div class="title">
+
+            <span>
+                PYTHON LAB
+            </span>
+
+            <h1>
+                تجربة الغسالة الذكية
+            </h1>
+
+            <p>
+                أدخل معلومات الملابس ودع النظام الآلي يختار البرنامج المناسب.
+            </p>
+
+        </div>
+
+
+
+        <!-- الغسالة -->
+
+        <div class="washing-machine">
+
+            <div class="machine-body">
+
+                <div class="machine-panel">
+                    SMART WASH
+                </div>
+
+                <div class="door">
+                    SMART
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- الاختيارات -->
+
+        <div class="controls">
+
+
+            <!-- الوزن -->
+
+            <div class="field">
+
+                <label>
+                    وزن الملابس بالكيلوغرام
+                </label>
+
+                <input
+                    id="weight"
+                    type="number"
+                    min="0.1"
+                    max="15"
+                    step="0.1"
+                    value="4"
+                >
+
+            </div>
+
+
+
+            <!-- الاتساخ -->
+
+            <div class="field">
+
+                <label>
+                    درجة الاتساخ من 1 إلى 10
+                </label>
+
+                <input
+                    id="dirt"
+                    type="number"
+                    min="1"
+                    max="10"
+                    step="1"
+                    value="5"
+                >
+
+            </div>
+
+
+
+            <!-- نوع القماش -->
+
+            <div class="field">
+
+                <label>
+                    نوع القماش
+                </label>
+
+                <select id="fabric">
+
+                    <option value="cotton">
+                        cotton
+                    </option>
+
+                    <option value="wool">
+                        wool
+                    </option>
+
+                    <option value="synthetic">
+                        synthetic
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <button
+                id="runButton"
+                class="run"
+                disabled>
+
+                جاري تحميل Python...
+
+            </button>
+
+
+        </div>
+
+
+
+        <!-- شاشة البرنامج -->
+
+        <div class="terminal">
+
+            <div class="terminal-head">
+
+                <div class="dot"></div>
+
+                <div class="dot"></div>
+
+                <div class="dot"></div>
+
+                <span class="terminal-name">
+                    smart_washing_machine.py
+                </span>
+
+            </div>
+
+
+            <pre id="output">جاري تجهيز نظام الغسالة الذكية...</pre>
+
+        </div>
+
+
+        <div id="status" class="status">
+            Loading Python engine...
+        </div>
+
+
+    </div>
+
+
+
+<script>
+
+
+let pyodide = null;
+
+
+
+/*
+    تحميل Python
+*/
+
+async function startPython() {
+
+    try {
+
+        pyodide = await loadPyodide();
+
+
+        document.getElementById("runButton").disabled = false;
+
+        document.getElementById("runButton").textContent =
+            "▶ Run Smart Washing Machine";
+
+
+        document.getElementById("status").textContent =
+            "Python engine ready ✓";
+
+
+        document.getElementById("status").className =
+            "status ready";
+
+
+        document.getElementById("output").textContent =
+            "Ready.\n\nأدخل بيانات الملابس ثم اضغط Run Smart Washing Machine.";
+
+
+    }
+
+    catch(error) {
+
+        document.getElementById("output").textContent =
+            "حدث خطأ أثناء تحميل Python.\n\n" + error;
+
+        document.getElementById("status").textContent =
+            "Python engine failed.";
+
+    }
+
+}
+
+
+startPython();
+
+
+
+/*
+    تشغيل برنامج الغسالة
+*/
+
+document.getElementById("runButton")
+.addEventListener("click", async function() {
+
+
+    const weight =
+        parseFloat(
+            document.getElementById("weight").value
+        );
+
+
+    const dirt =
+        parseInt(
+            document.getElementById("dirt").value
+        );
+
+
+    const fabric =
+        document.getElementById("fabric").value;
+
+
+
+    /*
+        التحقق من البيانات
+    */
+
+    if (!weight || weight <= 0) {
+
+        alert("يرجى إدخال وزن صحيح.");
+
+        return;
+
+    }
+
+
+    if (dirt < 1 || dirt > 10) {
+
+        alert("درجة الاتساخ يجب أن تكون بين 1 و 10.");
+
+        return;
+
+    }
+
+
+
+    const button =
+        document.getElementById("runButton");
+
+
+    button.disabled = true;
+
+    button.textContent =
+        "⏳ Washing...";
+
+
+
+    const output =
+        document.getElementById("output");
+
+
+    const status =
+        document.getElementById("status");
+
+
+
+    output.textContent =
+        "Starting smart washing machine...\n";
+
+
+
+    /*
+        نفس منطق كود Python
+    */
+
+    const pythonCode = `
+
+class SmartWashingMachine:
+
+    def __init__(self):
+
+        self.weight = 0
+
+        self.dirt_level = 0
+
+        self.fabric = ""
+
+        self.water = 0
+
+        self.temperature = 20
+
+        self.speed = 0
+
+        self.energy = 0
+
+
+    def detect_load(self):
+
+        print("\\n🔍 Detecting laundry...")
+
+
+        if self.weight <= 3:
+
+            self.water = 25
+
+
+        elif self.weight <= 6:
+
+            self.water = 40
+
+
+        else:
+
+            self.water = 55
+
+
+        print(f"Load weight: {self.weight} kg")
+
+        print(f"Water required: {self.water} L")
+
+
+
+    def choose_program(self):
+
+        print("\\n🤖 AI is choosing the best program...")
+
+
+        if self.fabric == "cotton":
+
+            self.temperature = 40
+
+            self.speed = 1000
+
+
+        elif self.fabric == "wool":
+
+            self.temperature = 30
+
+            self.speed = 600
+
+
+        elif self.fabric == "synthetic":
+
+            self.temperature = 30
+
+            self.speed = 800
+
+
+        if self.dirt_level >= 8:
+
+            self.temperature += 10
+
+
+        print(f"Temperature: {self.temperature}°C")
+
+        print(f"Spin speed: {self.speed} RPM")
+
+
+
+    def washing(self):
+
+        print("\\n💧 Filling water...")
+
+        print("🫧 Adding detergent...")
+
+        print("🔄 Washing...")
+
+
+        self.energy += self.temperature * 0.02
+
+
+
+    def rinsing(self):
+
+        print("\\n🚿 Rinsing...")
+
+
+        self.water += 20
+
+
+
+    def spinning(self):
+
+        print("\\n🔄 Spinning...")
+
+
+        self.energy += 0.15
+
+
+
+    def finish(self):
+
+        print("\\n✅ Washing completed!")
+
+        print(f"Water used: {self.water} L")
+
+        print(f"Energy used: {self.energy:.2f} kWh")
+
+
+
+machine = SmartWashingMachine()
+
+
+machine.weight = ${weight}
+
+machine.dirt_level = ${dirt}
+
+machine.fabric = "${fabric}"
+
+
+machine.detect_load()
+
+machine.choose_program()
+
+machine.washing()
+
+machine.rinsing()
+
+machine.spinning()
+
+machine.finish()
+
+`;
+
+
+
+    try {
+
+
+        /*
+            إنشاء شاشة إخراج Python
+        */
+
+        pyodide.runPython(`
+
+import sys
+
+from io import StringIO
+
+_output = StringIO()
+
+sys.stdout = _output
+
+`);
+
+
+
+        /*
+            تشغيل الكود
+        */
+
+        await pyodide.runPythonAsync(
+            pythonCode
+        );
+
+
+
+        /*
+            الحصول على النتيجة
+        */
+
+        const result =
+            pyodide.runPython(
+                "_output.getvalue()"
+            );
+
+
+        output.textContent =
+            result;
+
+
+        status.textContent =
+            "Washing completed ✓";
+
+
+        status.className =
+            "status ready";
+
+
+    }
+
+    catch(error) {
+
+
+        output.textContent =
+            "Python Error:\\n\\n" + error;
+
+
+        status.textContent =
+            "Program error";
+
+
+    }
+
+
+    button.disabled = false;
+
+
+    button.textContent =
+        "▶ Run Smart Washing Machine";
+
+
+});
+
+</script>
+
+
+</body>
+
+</html>
