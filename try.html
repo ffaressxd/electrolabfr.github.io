@@ -230,6 +230,173 @@
 
             letter-spacing: 2px;
 
+            position: relative;
+
+            overflow: hidden;
+
+        }
+
+
+        /* =========================
+           تأثير تشغيل الغسالة
+           ========================= */
+
+        .washing-machine.running .machine-body {
+
+            animation: machineShake 0.18s infinite alternate;
+
+            box-shadow:
+
+                0 0 35px rgba(0, 110, 255, 0.25),
+
+                0 0 70px rgba(0, 110, 255, 0.10);
+
+        }
+
+
+        .washing-machine.running .machine-panel {
+
+            color: #55ffb1;
+
+            border-color: #258cff;
+
+            box-shadow:
+
+                0 0 12px rgba(38, 141, 255, .45);
+
+        }
+
+
+        .washing-machine.running .door {
+
+            border-color: #3f9aff;
+
+            box-shadow:
+
+                inset 0 0 25px #000,
+
+                0 0 25px rgba(0, 140, 255, .45);
+
+        }
+
+
+        .washing-machine.running .door::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 105px;
+
+            height: 105px;
+
+            border-radius: 50%;
+
+            background:
+
+                conic-gradient(
+
+                    #0a5c91,
+
+                    #0d91d0,
+
+                    #07345b,
+
+                    #12a8df,
+
+                    #0a5c91
+
+                );
+
+            opacity: .75;
+
+            animation: drumSpin .55s linear infinite;
+
+            box-shadow:
+
+                inset 0 0 20px #00111f;
+
+        }
+
+
+        .washing-machine.running .door::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 75px;
+
+            height: 35px;
+
+            border-radius: 50%;
+
+            background: rgba(90, 210, 255, .30);
+
+            filter: blur(5px);
+
+            animation: waterMove .7s ease-in-out infinite alternate;
+
+        }
+
+
+        .washing-machine.done .machine-panel {
+
+            color: #55ffb1;
+
+            border-color: #55ffb1;
+
+        }
+
+
+        @keyframes drumSpin {
+
+            from {
+
+                transform: rotate(0deg);
+
+            }
+
+            to {
+
+                transform: rotate(360deg);
+
+            }
+
+        }
+
+
+        @keyframes waterMove {
+
+            from {
+
+                transform: translateX(-18px) rotate(-8deg);
+
+            }
+
+            to {
+
+                transform: translateX(18px) rotate(8deg);
+
+            }
+
+        }
+
+
+        @keyframes machineShake {
+
+            from {
+
+                transform: translateX(-1px);
+
+            }
+
+            to {
+
+                transform: translateX(1px);
+
+            }
+
         }
 
 
@@ -512,11 +679,11 @@
 
         <!-- الغسالة -->
 
-        <div class="washing-machine">
+        <div class="washing-machine" id="washingMachine">
 
             <div class="machine-body">
 
-                <div class="machine-panel">
+                <div class="machine-panel" id="machinePanel">
                     SMART WASH
                 </div>
 
@@ -774,6 +941,25 @@ document.getElementById("runButton")
         document.getElementById("status");
 
 
+    const washingMachine =
+        document.getElementById("washingMachine");
+
+
+    const machinePanel =
+        document.getElementById("machinePanel");
+
+
+
+    /* تشغيل تأثير الغسالة */
+
+    washingMachine.classList.remove("done");
+
+    washingMachine.classList.add("running");
+
+    machinePanel.textContent =
+        "WASHING...";
+
+
 
     output.textContent =
         "Starting smart washing machine...\n";
@@ -965,6 +1151,15 @@ sys.stdout = _output
         );
 
 
+        /*
+            إعطاء تأثير التشغيل وقتًا بسيطًا
+        */
+
+        await new Promise(
+            resolve => setTimeout(resolve, 2500)
+        );
+
+
 
         /*
             الحصول على النتيجة
@@ -980,6 +1175,16 @@ sys.stdout = _output
             result;
 
 
+        /* إيقاف الغسالة */
+
+        washingMachine.classList.remove("running");
+
+        washingMachine.classList.add("done");
+
+        machinePanel.textContent =
+            "DONE ✓";
+
+
         status.textContent =
             "Washing completed ✓";
 
@@ -991,6 +1196,12 @@ sys.stdout = _output
     }
 
     catch(error) {
+
+
+        washingMachine.classList.remove("running");
+
+        machinePanel.textContent =
+            "ERROR";
 
 
         output.textContent =
